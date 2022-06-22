@@ -1,24 +1,18 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {increment, decrement} from '../store/count/countSlice'
+import { increment, decrement } from '../store/count/countSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-const IndexPage = ({counted, increment, decrement}) => {
-  return(
+export default function Home() {
+  const dispatch = useDispatch();
+  const { count } = useSelector(state => state.count);
+  return (
     <div>
       <h1>Simple implement Next.js With Redux Toolkit</h1>
-      <h2>Counted: {counted}</h2>
-      <hr/>
-      <button onClick={() => increment()}>Increment</button> 
-      &nbsp; 
-      <button onClick={() => decrement()}>decrement</button>
+      <h2>Counted: {count}</h2>
+      <hr />
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      &nbsp;
+      <button onClick={() => dispatch(decrement())}>decrement</button>
     </div>
   )
 }
-
-const mapStateToProps = (state) => ({
-  counted: state.count.count
-})
-
-const mapDispatchToProps = { increment, decrement }
-
-export default connect(mapStateToProps, mapDispatchToProps)(IndexPage)

@@ -1,30 +1,12 @@
-import React from "react";
-import NextApp from "next/app";
-import withReduxStore from '../lib/with-redux-store'
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
-class App extends NextApp {
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-
-    return { 
-      pageProps, 
-    };
-  }
-
-  render() {
-    const { Component, pageProps, reduxStore } = this.props;
-
-    return (
-      <Provider store={reduxStore}>
-        <Component {...pageProps} />
-      </Provider>
-    );
-  }
+function MyApp({ Component, pageProps }) {
+  return (
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  )
 }
 
-export default withReduxStore(App)
+export default MyApp;
